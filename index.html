@@ -1168,7 +1168,7 @@
     <div class="relative w-full max-w-xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
         
         <!-- Close Button -->
-        <button onclick="closeQuoteModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 transition">
+        <button type="button" onclick="closeQuoteModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 transition">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
@@ -1222,13 +1222,15 @@
                           class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition"></textarea>
             </div>
 
-            <!-- Submit Action Choice -->
+            <!-- Submit Method Choice Buttons -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <button type="submit" onclick="setSendMethod('whatsapp')" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-green-600/20 flex items-center justify-center gap-2 text-sm">
+                <button type="submit" onclick="setSendMethod('whatsapp')" 
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-green-600/20 flex items-center justify-center gap-2 text-sm">
                     💬 Send via WhatsApp
                 </button>
 
-                <button type="submit" onclick="setSendMethod('email')" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-red-600/20 flex items-center justify-center gap-2 text-sm">
+                <button type="submit" onclick="setSendMethod('email')" 
+                        class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-red-600/20 flex items-center justify-center gap-2 text-sm">
                     ✉️ Send via Email
                 </button>
             </div>
@@ -1238,10 +1240,10 @@
 
 <!-- ================= JAVASCRIPT CODE ================= -->
 <script>
-    let sendMethod = 'whatsapp';
+    let currentSendMethod = 'whatsapp';
 
     function setSendMethod(method) {
-        sendMethod = method;
+        currentSendMethod = method;
     }
 
     function openQuoteModal() {
@@ -1255,20 +1257,17 @@
     function handleQuoteSubmit(event) {
         event.preventDefault();
 
-        // Target Details for Printing One
         const targetWhatsApp = "8801813564363"; 
         const targetEmail = "printingonebd@gmail.com"; 
 
-        // Form Data
-        const service = document.getElementById('modalService').value;
-        const name = document.getElementById('modalName').value;
-        const phone = document.getElementById('modalPhone').value;
-        const qty = document.getElementById('modalQty').value || 'Not specified';
-        const date = document.getElementById('modalDate').value || 'Not specified';
-        const specs = document.getElementById('modalSpecs').value || 'None';
+        const service = document.getElementById('modalService').value.trim();
+        const name = document.getElementById('modalName').value.trim();
+        const phone = document.getElementById('modalPhone').value.trim();
+        const qty = document.getElementById('modalQty').value.trim() || 'Not specified';
+        const date = document.getElementById('modalDate').value.trim() || 'Not specified';
+        const specs = document.getElementById('modalSpecs').value.trim() || 'None';
 
-        // Plain Text Content
-        const messageBody = `*NEW QUOTATION REQUEST - PRINTING ONE*\n\n` +
+        const messageBody = `NEW QUOTATION REQUEST - PRINTING ONE\n\n` +
                             `Service: ${service}\n` +
                             `Customer Name: ${name}\n` +
                             `Phone/WhatsApp: ${phone}\n` +
@@ -1276,7 +1275,7 @@
                             `Target Date: ${date}\n` +
                             `Specifications: ${specs}`;
 
-        if (sendMethod === 'whatsapp') {
+        if (currentSendMethod === 'whatsapp') {
             const encodedMessage = encodeURIComponent(messageBody);
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             const waURL = isMobile 
@@ -1284,7 +1283,7 @@
                 : `https://web.whatsapp.com/send?phone=${targetWhatsApp}&text=${encodedMessage}`;
             
             window.open(waURL, '_blank');
-        } else if (sendMethod === 'email') {
+        } else if (currentSendMethod === 'email') {
             const subject = encodeURIComponent(`Quotation Request from ${name} - Printing One`);
             const body = encodeURIComponent(messageBody);
             const mailtoURL = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
@@ -1294,6 +1293,7 @@
 
         closeQuoteModal();
     }
+</script>
 </script>
 </body>
 </html>
