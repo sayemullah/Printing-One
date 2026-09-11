@@ -1163,7 +1163,7 @@
             }
         }
     </script>
-  <!-- ================= QUOTATION MODAL ================= -->
+  <!-- ================= PRINTING ONE QUOTATION MODAL ================= -->
 <div id="quoteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden p-4">
     <div class="relative w-full max-w-xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
         
@@ -1181,24 +1181,23 @@
         <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight mb-2">Get a Custom Quote</h2>
         <p class="text-gray-500 text-sm mb-6 leading-relaxed">Provide your order details and we will calculate the best wholesale price for you.</p>
 
-        <!-- Form -->
-        <form id="quoteForm" onsubmit="return false;" class="space-y-4">
-            
+        <!-- Form Elements with Unique IDs -->
+        <div class="space-y-4">
             <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">SERVICE REQUIRED *</label>
-                <input type="text" id="modalService" placeholder="e.g. Visiting Cards / Envelope / Packaging Box" 
+                <input type="text" id="po_service" placeholder="e.g. Visiting Cards / Envelope / Packaging Box" 
                        class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition">
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">YOUR NAME *</label>
-                    <input type="text" id="modalName" placeholder="Full Name" 
+                    <input type="text" id="po_name" placeholder="Full Name" 
                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">PHONE / WHATSAPP *</label>
-                    <input type="tel" id="modalPhone" placeholder="018XXXXXXXX" 
+                    <input type="tel" id="po_phone" placeholder="018XXXXXXXX" 
                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition">
                 </div>
             </div>
@@ -1206,82 +1205,80 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">ESTIMATED QUANTITY</label>
-                    <input type="text" id="modalQty" placeholder="e.g. 1000 pcs" 
+                    <input type="text" id="po_qty" placeholder="e.g. 1000 pcs" 
                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">TARGET DATE</label>
-                    <input type="text" id="modalDate" placeholder="e.g. Within 3 days" 
+                    <input type="text" id="po_date" placeholder="e.g. Within 3 days" 
                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition">
                 </div>
             </div>
 
             <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">ADDITIONAL SPECIFICATIONS</label>
-                <textarea id="modalSpecs" rows="3" placeholder="Specify paper GSM, size, lamination (matt/gloss), spot UV, embossing, or special requests..." 
+                <textarea id="po_specs" rows="3" placeholder="Specify paper GSM, size, lamination, etc." 
                           class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition"></textarea>
             </div>
 
-            <!-- Submit Buttons -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <button type="button" onclick="sendQuoteData('whatsapp')" 
-                        class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-green-600/20 flex items-center justify-center gap-2 text-sm">
+                <button type="button" onclick="sendQuotationNow('whatsapp')" 
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-sm">
                     💬 Send via WhatsApp
                 </button>
 
-                <button type="button" onclick="sendQuoteData('email')" 
-                        class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-red-600/20 flex items-center justify-center gap-2 text-sm">
+                <button type="button" onclick="sendQuotationNow('email')" 
+                        class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-sm">
                     ✉️ Send via Email
                 </button>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
 <!-- ================= JAVASCRIPT CODE ================= -->
 <script>
     function openQuoteModal() {
-        var modal = document.getElementById('quoteModal');
-        if(modal) modal.classList.remove('hidden');
+        var m = document.getElementById('quoteModal');
+        if (m) m.classList.remove('hidden');
     }
 
     function closeQuoteModal() {
-        var modal = document.getElementById('quoteModal');
-        if(modal) modal.classList.add('hidden');
+        var m = document.getElementById('quoteModal');
+        if (m) m.classList.add('hidden');
     }
 
-    function sendQuoteData(method) {
-        var targetWhatsApp = "8801813564363"; 
-        var targetEmail = "printingonebd@gmail.com"; 
+    function sendQuotationNow(medium) {
+        var s = document.getElementById('po_service').value.trim();
+        var n = document.getElementById('po_name').value.trim();
+        var p = document.getElementById('po_phone').value.trim();
+        var q = document.getElementById('po_qty').value.trim();
+        var d = document.getElementById('po_date').value.trim();
+        var spec = document.getElementById('po_specs').value.trim();
 
-        var serviceVal = document.getElementById('modalService') ? document.getElementById('modalService').value : '';
-        var nameVal = document.getElementById('modalName') ? document.getElementById('modalName').value : '';
-        var phoneVal = document.getElementById('modalPhone') ? document.getElementById('modalPhone').value : '';
-        var qtyVal = document.getElementById('modalQty') ? document.getElementById('modalQty').value : '';
-        var dateVal = document.getElementById('modalDate') ? document.getElementById('modalDate').value : '';
-        var specsVal = document.getElementById('modalSpecs') ? document.getElementById('modalSpecs').value : '';
-
-        if (!serviceVal.trim() || !nameVal.trim() || !phoneVal.trim()) {
-            alert('Please fill in Service Required, Name, and Phone/WhatsApp number.');
+        if (!s || !n || !p) {
+            alert('দয়া করে Service Required, Your Name এবং Phone/WhatsApp নম্বর পূরণ করুন।');
             return;
         }
 
-        var fullMessage = "NEW QUOTATION REQUEST - PRINTING ONE\n\n" +
-                          "Service: " + serviceVal + "\n" +
-                          "Customer Name: " + nameVal + "\n" +
-                          "Phone/WhatsApp: " + phoneVal + "\n" +
-                          "Quantity: " + (qtyVal.trim() ? qtyVal : "Not specified") + "\n" +
-                          "Target Date: " + (dateVal.trim() ? dateVal : "Not specified") + "\n" +
-                          "Specifications: " + (specsVal.trim() ? specsVal : "None");
+        var text = "*NEW QUOTATION REQUEST - PRINTING ONE*\n\n" +
+                   "*Service:* " + s + "\n" +
+                   "*Customer Name:* " + n + "\n" +
+                   "*Phone/WhatsApp:* " + p + "\n" +
+                   "*Quantity:* " + (q ? q : "Not specified") + "\n" +
+                   "*Target Date:* " + (d ? d : "Not specified") + "\n" +
+                   "*Specifications:* " + (spec ? spec : "None");
 
-        if (method === 'whatsapp') {
-            var waURL = "https://wa.me/" + targetWhatsApp + "?text=" + encodeURIComponent(fullMessage);
-            window.open(waURL, '_blank');
-        } else if (method === 'email') {
-            var mailtoURL = "mailto:" + targetEmail + "?subject=" + encodeURIComponent("Quotation Request from " + nameVal) + "&body=" + encodeURIComponent(fullMessage);
-            window.location.href = mailtoURL;
+        if (medium === 'whatsapp') {
+            var url = "https://api.whatsapp.com/send?phone=8801813564363&text=" + encodeURIComponent(text);
+            window.open(url, '_blank');
+        } else if (medium === 'email') {
+            var mailUrl = "mailto:printingonebd@gmail.com?subject=" + encodeURIComponent("Quotation Request - " + n) + "&body=" + encodeURIComponent(text);
+            window.location.href = mailUrl;
         }
 
         closeQuoteModal();
     }
 </script>
+</body>
+</html>
