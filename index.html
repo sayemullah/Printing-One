@@ -1182,7 +1182,7 @@
         <p class="text-gray-500 text-sm mb-6 leading-relaxed">Provide your order details and choose how you want to send your request.</p>
 
         <!-- Form Elements -->
-        <div class="space-y-4">
+        <form onsubmit="return false;" class="space-y-4">
             <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">SERVICE REQUIRED *</label>
                 <input type="text" id="po_service" placeholder="e.g. Visiting Cards / Envelope / Packaging Box" 
@@ -1234,7 +1234,7 @@
                     ✉️ Gmail (printing1bd)
                 </button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -1251,12 +1251,12 @@
     }
 
     function sendQuotationNow(medium) {
-        var s = document.getElementById('po_service').value.trim();
-        var n = document.getElementById('po_name').value.trim();
-        var p = document.getElementById('po_phone').value.trim();
-        var q = document.getElementById('po_qty').value.trim();
-        var d = document.getElementById('po_date').value.trim();
-        var spec = document.getElementById('po_specs').value.trim();
+        var s = document.getElementById('po_service') ? document.getElementById('po_service').value.trim() : '';
+        var n = document.getElementById('po_name') ? document.getElementById('po_name').value.trim() : '';
+        var p = document.getElementById('po_phone') ? document.getElementById('po_phone').value.trim() : '';
+        var q = document.getElementById('po_qty') ? document.getElementById('po_qty').value.trim() : '';
+        var d = document.getElementById('po_date') ? document.getElementById('po_date').value.trim() : '';
+        var spec = document.getElementById('po_specs') ? document.getElementById('po_specs').value.trim() : '';
 
         if (!s || !n || !p) {
             alert('দয়া করে Service Required, Your Name এবং Phone/WhatsApp নম্বর পূরণ করুন।');
