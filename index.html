@@ -1163,9 +1163,9 @@
             }
         }
     </script>
-  <!-- ================= PRINTING ONE QUOTATION MODAL ================= -->
-<div id="quoteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden p-4">
-    <div class="relative w-full max-w-xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
+ <!-- ================= PRINTING ONE QUOTATION MODAL ================= -->
+<div id="quoteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden p-4 overflow-y-auto">
+    <div class="relative w-full max-w-xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto mx-auto my-auto">
         
         <!-- Close Button -->
         <button type="button" onclick="closeQuoteModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 transition">
@@ -1179,9 +1179,9 @@
         </span>
 
         <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight mb-2">Get a Custom Quote</h2>
-        <p class="text-gray-500 text-sm mb-6 leading-relaxed">Provide your order details and we will calculate the best wholesale price for you.</p>
+        <p class="text-gray-500 text-sm mb-6 leading-relaxed">Provide your order details and choose how you want to send your request.</p>
 
-        <!-- Form Elements with Unique IDs -->
+        <!-- Form Elements -->
         <div class="space-y-4">
             <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">SERVICE REQUIRED *</label>
@@ -1221,15 +1221,17 @@
                           class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition"></textarea>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <!-- Sending Options -->
+            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider pt-2">SEND REQUEST VIA *</label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button type="button" onclick="sendQuotationNow('whatsapp')" 
                         class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-sm">
-                    💬 Send via WhatsApp
+                    💬 WhatsApp (01818564363)
                 </button>
 
                 <button type="button" onclick="sendQuotationNow('email')" 
                         class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-sm">
-                    ✉️ Send via Email
+                    ✉️ Gmail (printing1bd)
                 </button>
             </div>
         </div>
@@ -1270,10 +1272,10 @@
                    "*Specifications:* " + (spec ? spec : "None");
 
         if (medium === 'whatsapp') {
-            var url = "https://api.whatsapp.com/send?phone=8801813564363&text=" + encodeURIComponent(text);
+            var url = "https://api.whatsapp.com/send?phone=8801818564363&text=" + encodeURIComponent(text);
             window.open(url, '_blank');
         } else if (medium === 'email') {
-            var mailUrl = "mailto:printingonebd@gmail.com?subject=" + encodeURIComponent("Quotation Request - " + n) + "&body=" + encodeURIComponent(text);
+            var mailUrl = "mailto:printing1bd@gmail.com?subject=" + encodeURIComponent("Quotation Request - " + n) + "&body=" + encodeURIComponent(text);
             window.location.href = mailUrl;
         }
 
