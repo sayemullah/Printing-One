@@ -1163,7 +1163,7 @@
             }
         }
     </script>
-    <!-- ================= QUOTATION MODAL ================= -->
+  <!-- ================= QUOTATION MODAL ================= -->
 <div id="quoteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden p-4">
     <div class="relative w-full max-w-xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
         
@@ -1182,23 +1182,23 @@
         <p class="text-gray-500 text-sm mb-6 leading-relaxed">Provide your order details and we will calculate the best wholesale price for you.</p>
 
         <!-- Form -->
-        <form id="quoteForm" onsubmit="handleQuoteSubmit(event)" class="space-y-4">
+        <form id="quoteForm" onsubmit="return false;" class="space-y-4">
             
             <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">SERVICE REQUIRED *</label>
-                <input type="text" id="modalService" required placeholder="e.g. Visiting Cards / Envelope / Packaging Box" 
+                <input type="text" id="modalService" placeholder="e.g. Visiting Cards / Envelope / Packaging Box" 
                        class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition">
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">YOUR NAME *</label>
-                    <input type="text" id="modalName" required placeholder="Full Name" 
+                    <input type="text" id="modalName" placeholder="Full Name" 
                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">PHONE / WHATSAPP *</label>
-                    <input type="tel" id="modalPhone" required placeholder="018XXXXXXXX" 
+                    <input type="tel" id="modalPhone" placeholder="018XXXXXXXX" 
                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition">
                 </div>
             </div>
@@ -1222,14 +1222,14 @@
                           class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-gray-200 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-white transition"></textarea>
             </div>
 
-            <!-- Submit Method Choice Buttons -->
+            <!-- Submit Buttons -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <button type="submit" onclick="setSendMethod('whatsapp')" 
+                <button type="button" onclick="sendQuoteData('whatsapp')" 
                         class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-green-600/20 flex items-center justify-center gap-2 text-sm">
                     💬 Send via WhatsApp
                 </button>
 
-                <button type="submit" onclick="setSendMethod('email')" 
+                <button type="button" onclick="sendQuoteData('email')" 
                         class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-red-600/20 flex items-center justify-center gap-2 text-sm">
                     ✉️ Send via Email
                 </button>
@@ -1240,60 +1240,48 @@
 
 <!-- ================= JAVASCRIPT CODE ================= -->
 <script>
-    let currentSendMethod = 'whatsapp';
-
-    function setSendMethod(method) {
-        currentSendMethod = method;
-    }
-
     function openQuoteModal() {
-        document.getElementById('quoteModal').classList.remove('hidden');
+        var modal = document.getElementById('quoteModal');
+        if(modal) modal.classList.remove('hidden');
     }
 
     function closeQuoteModal() {
-        document.getElementById('quoteModal').classList.add('hidden');
+        var modal = document.getElementById('quoteModal');
+        if(modal) modal.classList.add('hidden');
     }
 
-    function handleQuoteSubmit(event) {
-        event.preventDefault();
+    function sendQuoteData(method) {
+        var targetWhatsApp = "8801813564363"; 
+        var targetEmail = "printingonebd@gmail.com"; 
 
-        const targetWhatsApp = "8801818564363"; 
-        const targetEmail = "printingonebd@gmail.com"; 
+        var serviceVal = document.getElementById('modalService') ? document.getElementById('modalService').value : '';
+        var nameVal = document.getElementById('modalName') ? document.getElementById('modalName').value : '';
+        var phoneVal = document.getElementById('modalPhone') ? document.getElementById('modalPhone').value : '';
+        var qtyVal = document.getElementById('modalQty') ? document.getElementById('modalQty').value : '';
+        var dateVal = document.getElementById('modalDate') ? document.getElementById('modalDate').value : '';
+        var specsVal = document.getElementById('modalSpecs') ? document.getElementById('modalSpecs').value : '';
 
-        const service = document.getElementById('modalService').value.trim();
-        const name = document.getElementById('modalName').value.trim();
-        const phone = document.getElementById('modalPhone').value.trim();
-        const qty = document.getElementById('modalQty').value.trim() || 'Not specified';
-        const date = document.getElementById('modalDate').value.trim() || 'Not specified';
-        const specs = document.getElementById('modalSpecs').value.trim() || 'None';
+        if (!serviceVal.trim() || !nameVal.trim() || !phoneVal.trim()) {
+            alert('Please fill in Service Required, Name, and Phone/WhatsApp number.');
+            return;
+        }
 
-        const messageBody = `NEW QUOTATION REQUEST - PRINTING ONE\n\n` +
-                            `Service: ${service}\n` +
-                            `Customer Name: ${name}\n` +
-                            `Phone/WhatsApp: ${phone}\n` +
-                            `Quantity: ${qty}\n` +
-                            `Target Date: ${date}\n` +
-                            `Specifications: ${specs}`;
+        var fullMessage = "NEW QUOTATION REQUEST - PRINTING ONE\n\n" +
+                          "Service: " + serviceVal + "\n" +
+                          "Customer Name: " + nameVal + "\n" +
+                          "Phone/WhatsApp: " + phoneVal + "\n" +
+                          "Quantity: " + (qtyVal.trim() ? qtyVal : "Not specified") + "\n" +
+                          "Target Date: " + (dateVal.trim() ? dateVal : "Not specified") + "\n" +
+                          "Specifications: " + (specsVal.trim() ? specsVal : "None");
 
-        if (currentSendMethod === 'whatsapp') {
-            const encodedMessage = encodeURIComponent(messageBody);
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            const waURL = isMobile 
-                ? `whatsapp://send?phone=${targetWhatsApp}&text=${encodedMessage}`
-                : `https://web.whatsapp.com/send?phone=${targetWhatsApp}&text=${encodedMessage}`;
-            
+        if (method === 'whatsapp') {
+            var waURL = "https://wa.me/" + targetWhatsApp + "?text=" + encodeURIComponent(fullMessage);
             window.open(waURL, '_blank');
-        } else if (currentSendMethod === 'email') {
-            const subject = encodeURIComponent(`Quotation Request from ${name} - Printing One`);
-            const body = encodeURIComponent(messageBody);
-            const mailtoURL = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
-            
+        } else if (method === 'email') {
+            var mailtoURL = "mailto:" + targetEmail + "?subject=" + encodeURIComponent("Quotation Request from " + nameVal) + "&body=" + encodeURIComponent(fullMessage);
             window.location.href = mailtoURL;
         }
 
         closeQuoteModal();
     }
 </script>
-</script>
-</body>
-</html>
